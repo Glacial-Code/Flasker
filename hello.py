@@ -44,7 +44,14 @@ def add_user():
             db.session.add(user)
             db.session.commit()
         name = form.name.data
-    return render_template("add_user.html", form=form)
+        form.name.data = ''
+        form.email.data = ''
+        flash("User Added Successfully!")
+    our_users = Users.query.order_by(Users.date_added)
+    return render_template("add_user.html", 
+                           form=form,
+                           name=name,
+                           our_users=our_users)
 
 
 @app.route('/')
